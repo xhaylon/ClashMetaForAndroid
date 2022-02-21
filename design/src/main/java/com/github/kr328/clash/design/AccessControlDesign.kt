@@ -45,6 +45,8 @@ class AccessControlDesign(
 
     suspend fun patchApps(apps: List<AppInfo>) {
         adapter.swapDataSet(adapter::apps, apps, false)
+
+        binding.searchView.visibility = View.VISIBLE
     }
 
     suspend fun rebindAll() {

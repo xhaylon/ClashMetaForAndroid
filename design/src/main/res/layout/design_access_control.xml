@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="self"
@@ -49,7 +50,9 @@
                     android:contentDescription="@string/search"
                     android:focusable="true"
                     android:padding="@dimen/toolbar_image_action_padding"
-                    android:src="@drawable/ic_baseline_search" />
+                    android:src="@drawable/ic_baseline_search"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/menu_view"

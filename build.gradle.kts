@@ -85,6 +85,18 @@ subprojects {
                     applicationIdSuffix = ".meta"
                 }
             }
+
+            create("meta") {
+                isDefault = true
+                dimension = flavorDimensionList[0]
+                versionNameSuffix = ".Meta"
+
+                buildConfigField("boolean", "PREMIUM", "Boolean.parseBoolean(\"false\")")
+
+                if (isApp) {
+                    applicationIdSuffix = ".meta"
+                }
+            }
         }
 
         sourceSets {

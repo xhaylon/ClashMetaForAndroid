@@ -1,6 +1,6 @@
 module cfa
 
-go 1.18
+go 1.20
 
 require (
 	github.com/Dreamacro/clash v1.7.1
@@ -8,13 +8,16 @@ require (
 	github.com/dlclark/regexp2 v1.10.0
 	github.com/miekg/dns v1.1.54
 	github.com/oschwald/geoip2-golang v1.8.0
+	github.com/sagernet/sing v0.2.5-0.20230530114415-221f066dba7c
 	golang.org/x/sync v0.2.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
 replace github.com/Dreamacro/clash => ../../foss/golang/clash
 
-require github.com/sagernet/sing v0.2.5-0.20230530114415-221f066dba7c
+replace github.com/sagernet/sing => github.com/metacubex/sing v0.0.0-20230530121223-b768faae5c6b
+
+replace github.com/sagernet/sing-vmess => github.com/metacubex/sing-vmess v0.1.5-0.20230607134851-17f84aec22a1
 
 require (
 	github.com/3andne/restls-client-go v0.1.4 // indirect
@@ -33,9 +36,8 @@ require (
 	github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0 // indirect
 	github.com/gofrs/uuid/v5 v5.0.0 // indirect
 	github.com/golang/mock v1.6.0 // indirect
-	github.com/google/btree v1.0.1 // indirect
+	github.com/google/btree v1.1.2 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20210407192527-94a9f03dee38 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect
@@ -48,12 +50,13 @@ require (
 	github.com/lunixbochs/struc v0.0.0-20200707160740-784aaebc1d40 // indirect
 	github.com/mdlayher/netlink v1.7.2 // indirect
 	github.com/mdlayher/socket v0.4.1 // indirect
-	github.com/metacubex/gvisor v0.0.0-20230417114019-3c3ee672d60c // indirect
+	github.com/metacubex/gopacket v1.1.20-0.20230608035415-7e2f98a3e759 // indirect
+	github.com/metacubex/gvisor v0.0.0-20230611153922-78842f086475 // indirect
 	github.com/metacubex/quic-go v0.35.2-0.20230603072621-ea2663348ebb // indirect
 	github.com/metacubex/sing-shadowsocks v0.2.2-0.20230509230448-a5157cc00a1c // indirect
 	github.com/metacubex/sing-shadowsocks2 v0.0.0-20230529235701-a238874242ca // indirect
-	github.com/metacubex/sing-tun v0.1.5-0.20230530125750-171afb2dfd8e // indirect
-	github.com/metacubex/sing-wireguard v0.0.0-20230426030325-41db09ae771a // indirect
+	github.com/metacubex/sing-tun v0.1.5-0.20230611154506-9fe2c0dc331d // indirect
+	github.com/metacubex/sing-wireguard v0.0.0-20230611155257-1498ae315a28 // indirect
 	github.com/mroth/weightedrand/v2 v2.0.1 // indirect
 	github.com/oasisprotocol/deoxysii v0.0.0-20220228165953-2091330c22b7 // indirect
 	github.com/onsi/ginkgo/v2 v2.2.0 // indirect
@@ -96,13 +99,9 @@ require (
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
-	golang.org/x/time v0.0.0-20220210224613-90d013bbcef8 // indirect
+	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/tools v0.6.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	lukechampine.com/blake3 v1.2.1 // indirect
 )
-
-replace gvisor.dev/gvisor v0.0.0-20230128000341-b7014294633b => github.com/metacubex/gvisor v0.0.0-20230202073621-9b7164de61df
-
-replace go.uber.org/atomic v1.10.0 => github.com/metacubex/uber-atomic v0.0.0-20230202125923-feb10b770370

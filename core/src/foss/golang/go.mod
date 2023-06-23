@@ -13,15 +13,13 @@ require (
 	github.com/oschwald/maxminddb-golang v1.10.0 // indirect
 	github.com/u-root/uio v0.0.0-20230220225925-ffce2a382923 // indirect
 	golang.org/x/mod v0.8.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/text v0.10.0 // indirect
 	golang.org/x/tools v0.6.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	lukechampine.com/blake3 v1.2.1 // indirect
 )
 
 replace github.com/sagernet/sing => github.com/metacubex/sing v0.0.0-20230530121223-b768faae5c6b
-
-replace github.com/sagernet/sing-vmess => github.com/metacubex/sing-vmess v0.1.5-0.20230607134851-17f84aec22a1
 
 require (
 	cfa/blob v0.0.0 // indirect
@@ -34,7 +32,7 @@ require (
 	github.com/coreos/go-iptables v0.6.0 // indirect
 	github.com/dlclark/regexp2 v1.10.0 // indirect
 	github.com/ericlagergren/aegis v0.0.0-20230312195928-b4ce538b56f9 // indirect
-	github.com/ericlagergren/polyval v0.0.0-20220411101811-e25bc10ba391 // indirect
+	github.com/ericlagergren/polyval v0.0.0-20220507050321-7144762f59cb // indirect
 	github.com/ericlagergren/siv v0.0.0-20220507050439-0b757b3aa5f1 // indirect
 	github.com/ericlagergren/subtle v0.0.0-20220507045147-890d697da010 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
@@ -42,7 +40,7 @@ require (
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/google/btree v1.1.2 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/google/pprof v0.0.0-20230207041349-798e818bf904 // indirect
+	github.com/google/pprof v0.0.0-20230602150820-91b7bce49751 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect
 	github.com/insomniacslk/dhcp v0.0.0-20230516061539-49801966e6cb // indirect
@@ -56,11 +54,12 @@ require (
 	github.com/metacubex/gopacket v1.1.20-0.20230608035415-7e2f98a3e759 // indirect
 	github.com/metacubex/gvisor v0.0.0-20230611153922-78842f086475 // indirect
 	github.com/metacubex/quic-go v0.35.2-0.20230603072621-ea2663348ebb // indirect
-	github.com/metacubex/sing-shadowsocks v0.2.2-0.20230509230448-a5157cc00a1c // indirect
-	github.com/metacubex/sing-shadowsocks2 v0.0.0-20230529235701-a238874242ca // indirect
-	github.com/metacubex/sing-tun v0.1.5-0.20230611154506-9fe2c0dc331d // indirect
+	github.com/metacubex/sing-shadowsocks v0.2.2 // indirect
+	github.com/metacubex/sing-shadowsocks2 v0.1.0 // indirect
+	github.com/metacubex/sing-tun v0.1.5-0.20230618235243-65051e73b018 // indirect
+	github.com/metacubex/sing-vmess v0.1.5 // indirect
 	github.com/metacubex/sing-wireguard v0.0.0-20230611155257-1498ae315a28 // indirect
-	github.com/miekg/dns v1.1.54 // indirect
+	github.com/miekg/dns v1.1.55 // indirect
 	github.com/mroth/weightedrand/v2 v2.0.1 // indirect
 	github.com/oasisprotocol/deoxysii v0.0.0-20220228165953-2091330c22b7 // indirect
 	github.com/onsi/ginkgo/v2 v2.8.3 // indirect
@@ -73,10 +72,9 @@ require (
 	github.com/quic-go/qtls-go1-20 v0.2.2 // indirect
 	github.com/sagernet/go-tun2socks v1.16.12-0.20220818015926-16cb67876a61 // indirect
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
-	github.com/sagernet/sing v0.2.5-0.20230530114415-221f066dba7c // indirect
-	github.com/sagernet/sing-mux v0.0.0-20230517134606-1ebe6bb26646 // indirect
-	github.com/sagernet/sing-shadowtls v0.1.2-0.20230531025805-ebadc7615da3 // indirect
-	github.com/sagernet/sing-vmess v0.1.5-0.20230417103030-8c3070ae3fb3 // indirect
+	github.com/sagernet/sing v0.2.6 // indirect
+	github.com/sagernet/sing-mux v0.1.0 // indirect
+	github.com/sagernet/sing-shadowtls v0.1.2 // indirect
 	github.com/sagernet/smux v0.0.0-20230312102458-337ec2a5af37 // indirect
 	github.com/sagernet/tfo-go v0.0.0-20230303015439-ffcfd8c41cf9 // indirect
 	github.com/sagernet/utls v0.0.0-20230309024959-6732c2ab36f2 // indirect
@@ -97,11 +95,11 @@ require (
 	github.com/zhangyunhao116/fastrand v0.3.0 // indirect
 	gitlab.com/yawning/bsaes.git v0.0.0-20190805113838-0a714cd429ec // indirect
 	go.etcd.io/bbolt v1.3.7 // indirect
-	golang.org/x/crypto v0.9.0 // indirect
+	golang.org/x/crypto v0.10.0 // indirect
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
-	golang.org/x/net v0.10.0 // indirect
-	golang.org/x/sync v0.2.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
+	golang.org/x/net v0.11.0 // indirect
+	golang.org/x/sync v0.3.0 // indirect
+	golang.org/x/sys v0.9.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

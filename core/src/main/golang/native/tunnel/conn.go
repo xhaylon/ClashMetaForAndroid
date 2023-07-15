@@ -6,19 +6,22 @@ import (
 )
 
 func CloseAllConnections() {
-	for _, c := range statistic.DefaultManager.Snapshot().Connections {
+	statistic.DefaultManager.Range(func(c statistic.Tracker) bool {
 		_ = c.Close()
-	}
+		return true
+	})
 }
 
 func closeMatch(filter func(conn C.Conn) bool) {
-	for _, c := range statistic.DefaultManager.Snapshot().Connections {
+	statistic.DefaultManager.Range(func(c statistic.Tracker) bool {
 		if cc, ok := c.(C.Conn); ok {
 			if filter(cc) {
 				_ = cc.Close()
+				return true
 			}
 		}
-	}
+		return false
+	})
 }
 
 func closeConnByGroup(name string) {

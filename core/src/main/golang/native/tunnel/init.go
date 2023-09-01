@@ -3,6 +3,7 @@ package tunnel
 import (
 	"context"
 	"net"
+	"strconv"
 	"strings"
 
 	"github.com/Dreamacro/clash/component/dialer"
@@ -18,6 +19,7 @@ func init() {
 		}
 
 		host, port, err := net.SplitHostPort(address)
+		dstPort, _ := strconv.Atoi(port)
 		if err != nil {
 			return nil, err
 		}
@@ -28,8 +30,8 @@ func init() {
 			NetWork:    C.TCP,
 			Type:       C.HTTPS,
 			SrcIP:      loopback,
-			SrcPort:    "65535",
-			DstPort:    port,
+			SrcPort:    65535,
+			DstPort:    uint16(dstPort),
 			Host:       host,
 			RawSrcAddr: left.RemoteAddr(),
 			RawDstAddr: left.LocalAddr(),

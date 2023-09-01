@@ -3,19 +3,17 @@ package tunnel
 import (
 	"fmt"
 
-	"github.com/oschwald/geoip2-golang"
-
 	"github.com/Dreamacro/clash/component/mmdb"
+	"github.com/oschwald/maxminddb-golang"
 )
 
 func InstallSideloadGeoip(block []byte) error {
 	if block == nil {
 		mmdb.InstallOverride(nil)
-
 		return nil
 	}
 
-	db, err := geoip2.FromBytes(block)
+	db, err := maxminddb.FromBytes(block)
 	if err != nil {
 		return fmt.Errorf("load sideload geoip mmdb: %s", err.Error())
 	}

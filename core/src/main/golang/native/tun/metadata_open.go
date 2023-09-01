@@ -3,11 +3,9 @@
 package tun
 
 import (
+	C "github.com/Dreamacro/clash/constant"
 	"github.com/sagernet/sing/common/metadata"
 	"net"
-	"strconv"
-
-	C "github.com/Dreamacro/clash/constant"
 )
 
 func createMetadata(lAddr, rAddr *net.TCPAddr) *C.Metadata {
@@ -16,8 +14,8 @@ func createMetadata(lAddr, rAddr *net.TCPAddr) *C.Metadata {
 		Type:       C.SOCKS5,
 		SrcIP:      metadata.SocksaddrFromNet(lAddr).Addr,
 		DstIP:      metadata.SocksaddrFromNet(rAddr).Addr,
-		SrcPort:    strconv.Itoa(lAddr.Port),
-		DstPort:    strconv.Itoa(rAddr.Port),
+		SrcPort:    uint16(lAddr.Port),
+		DstPort:    uint16(rAddr.Port),
 		Host:       "",
 		RawSrcAddr: lAddr,
 		RawDstAddr: rAddr,

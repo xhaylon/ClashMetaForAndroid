@@ -109,7 +109,7 @@ jobs:
         with:
           tag_name: ${{ steps.real_tag.outputs.tag }}
         env:
-          GITHUB_TOKEN: ${{ secrets.DEFAULT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
         uses: softprops/action-gh-release@v1

@@ -101,7 +101,7 @@ jobs:
           if [[ "${{ inputs.auto-bump-version }}" == "true" ]]; then
             echo "::set-output name=tag::v${{ steps.bump-version.outputs.newVersionName }}"
           else
-            echo "::set-output name=tag::$(git describe --tags --abbrev=0)
+            echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
           fi
 
       - name: Tag Repo

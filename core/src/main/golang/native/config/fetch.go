@@ -24,9 +24,7 @@ type Status struct {
 	MaxProgress int      `json:"max"`
 }
 
-func openUrl(url string) (io.ReadCloser, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
+func openUrl(ctx context.Context, url string) (io.ReadCloser, error) {
 	response, err := clashHttp.HttpRequest(ctx, url, http.MethodGet, http.Header{"User-Agent": {"ClashMetaForAndroid/" + app.VersionName()}}, nil)
 
 	if err != nil {
@@ -41,12 +39,15 @@ func openContent(url string) (io.ReadCloser, error) {
 }
 
 func fetch(url *U.URL, file string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+
 	var reader io.ReadCloser
 	var err error
 
 	switch url.Scheme {
 	case "http", "https":
-		reader, err = openUrl(url.String())
+		reader, err = openUrl(ctx, url.String())
 	case "content":
 		reader, err = openContent(url.String())
 	default:

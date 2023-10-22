@@ -1,10 +1,15 @@
-name: build_release
+name: Build Release
 
 on:
   push:
     tags:
       - '*' #
   workflow_dispatch:
+    inputs:
+      auto-bump-version:
+        description: 'Auto bump project version before building release'
+        required: false
+        type: boolean
 
 jobs:
   BuildRelease:
@@ -35,6 +40,40 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
+      
+      # If auto-bump-version is chosen BEGIN
+      - name: Configure Git
+        if: ${{ inputs.auto-bump-version }}
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+      
+      - name: Auto bump project version
+        if: ${{ inputs.auto-bump-version }}
+        id: bump-version
+        run: |
+          versionCode=$(grep -oP 'versionCode = \K\d+' build.gradle.kts)
+          versionName=$(grep -oP 'versionName = "\K[0-9.]+' build.gradle.kts)
+          major=$(echo $versionName | cut -d. -f1)
+          minor=$(echo $versionName | cut -d. -f2)
+          patch=$(echo $versionName | cut -d. -f3)
+          newPatch=$((patch + 1))
+          newVersionName="$major.$minor.$newPatch"
+          newVersionCode=$((versionCode + 1))
+          sed -i "s/versionCode = $versionCode/versionCode = $newVersionCode/" build.gradle.kts
+          sed -i "s/versionName = \"$versionName\"/versionName = \"$newVersionName\"/" build.gradle.kts
+          echo "::set-output name=newVersionName::$newVersionName"
+          echo "::set-output name=newVersionCode::$newVersionCode"
+      
+      - name: Commit modified version code and make new tag
+        if: ${{ inputs.auto-bump-version }}
+        run: |
+          newVersionName=${{ steps.bump-version.outputs.newVersionName }}
+          newVersionCode=${{ steps.bump-version.outputs.newVersionCode }}
+          git commit -am "Bump version to $newVersionName ($newVersionCode)"
+          git tag "v$newVersionName"
+          git push --follow-tags
+      # If auto-bump-version is chosen END
 
       - name: Signing properties
         env:
@@ -55,16 +94,21 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: --no-daemon app:assembleMetaRelease
-
-      - name: Set current tag
-        id: current_tag
-        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
+      
+      - name: Get real tag value (current or auto-bumped?)
+        id: real_tag
+        run: |
+          if [[ "${{ inputs.auto-bump-version }}" == "true" ]]; then
+            echo "::set-output name=tag::v${{ steps.bump-version.outputs.newVersionName }}"
+          else
+            echo "::set-output name=tag::$(git describe --tags --abbrev=0)
+          fi
 
       - name: Tag Repo
         uses: richardsimko/update-tag@v1
         with:
-          tag: ${{ steps.current_tag.outputs.tag }}
-          tag_name: ${{ steps.current_tag.outputs.tag }}
+          tag: ${{ steps.real_tag.outputs.tag }}
+          tag_name: ${{ steps.real_tag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

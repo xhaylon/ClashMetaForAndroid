@@ -12,7 +12,6 @@ import (
 	"github.com/Dreamacro/clash/adapter/inbound"
 	"github.com/Dreamacro/clash/common/pool"
 	C "github.com/Dreamacro/clash/constant"
-	"github.com/Dreamacro/clash/context"
 	"github.com/Dreamacro/clash/log"
 	"github.com/Dreamacro/clash/transport/socks5"
 	"github.com/Dreamacro/clash/tunnel"
@@ -98,7 +97,7 @@ func Start(fd int, gateway, portal, dns string) (io.Closer, error) {
 				continue
 			}
 
-			tunnel.TCPIn() <- context.NewConnContext(conn, createMetadata(lAddr, rAddr))
+			go tunnel.Tunnel.HandleTCPConn(conn, createMetadata(lAddr, rAddr))
 		}
 	}
 
@@ -150,7 +149,7 @@ func Start(fd int, gateway, portal, dns string) (io.Closer, error) {
 				},
 			}
 
-			tunnel.UDPIn() <- inbound.NewPacket(socks5.ParseAddrToSocksAddr(rAddr), pkt, C.SOCKS5)
+			tunnel.Tunnel.HandleUDPPacket(inbound.NewPacket(socks5.ParseAddrToSocksAddr(rAddr), pkt, C.SOCKS5))
 		}
 	}
 

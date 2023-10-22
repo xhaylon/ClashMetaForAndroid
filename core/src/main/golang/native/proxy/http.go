@@ -16,7 +16,7 @@ func Start(listen string) (listenAt string, err error) {
 
 	stopLocked()
 
-	listener, err = http.NewWithAuthenticate(listen, tunnel.TCPIn(), false)
+	listener, err = http.NewWithAuthenticate(listen, tunnel.Tunnel, false)
 	if err == nil {
 		listenAt = listener.Listener().Addr().String()
 	}

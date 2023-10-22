@@ -1,0 +1,78 @@
+name: Update Clash-Core and Go Modules
+on:
+  repository_dispatch:
+    types:
+      - core-updated
+  workflow_dispatch:
+
+env:
+  # go dependencies that should be fixed to certain version
+  PACKAGES_DO_NOT_UPGRADE: >-
+    github.com/Dreamacro/clash@v1.7.1
+    github.com/Kr328/tun2socket@v0.0.0-20220414050025-d07c78d06d34
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      - name: Checkout submodules
+        run: git submodule update --init --recursive --remote --force
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
+      
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      
+      - name: Download GeoIP Database
+        run: |
+          ./gradlew :core:downloadGeoipDatabase
+
+      - name: Update Foss Gomod
+        run: |
+          cd ${{ github.workspace }}/core/src/foss/golang/
+          go get -u ${{ env.PACKAGES_DO_NOT_UPGRADE }}
+
+      - name: Update Main Gomod
+        run: |
+          cd ${{ github.workspace }}/core/src/main/golang/native/
+          go get -u -d ${{ env.PACKAGES_DO_NOT_UPGRADE }}
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Update Dependencies
+          branch: update-dependencies
+          delete-branch: true
+          title: 'Update Dependencies'
+          draft: false
+          body: |
+            - Update Clash-Meta Core
+            - Update Go Module Dependecies
+          labels: |
+            Update
+        
+      - name: PR result
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+      

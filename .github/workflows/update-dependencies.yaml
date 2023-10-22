@@ -5,12 +5,6 @@ on:
       - core-updated
   workflow_dispatch:
 
-env:
-  # go dependencies that should be fixed to certain version
-  PACKAGES_DO_NOT_UPGRADE: >-
-    github.com/Dreamacro/clash@v1.7.1
-    github.com/Kr328/tun2socket@v0.0.0-20220414050025-d07c78d06d34
-
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
@@ -48,12 +42,12 @@ jobs:
       - name: Update Foss Gomod
         run: |
           cd ${{ github.workspace }}/core/src/foss/golang/
-          go get -u ${{ env.PACKAGES_DO_NOT_UPGRADE }}
+          go mod tidy
 
       - name: Update Main Gomod
         run: |
           cd ${{ github.workspace }}/core/src/main/golang/native/
-          go get -u -d ${{ env.PACKAGES_DO_NOT_UPGRADE }}
+          go mod tidy
 
       - name: Create Pull Request
         id: cpr

@@ -8,7 +8,6 @@ import (
 
 	"github.com/Dreamacro/clash/component/dialer"
 	C "github.com/Dreamacro/clash/constant"
-	CTX "github.com/Dreamacro/clash/context"
 	"github.com/Dreamacro/clash/tunnel"
 )
 
@@ -37,7 +36,7 @@ func init() {
 			RawDstAddr: left.LocalAddr(),
 		}
 
-		tunnel.TCPIn() <- CTX.NewConnContext(right, metadata)
+		go tunnel.Tunnel.HandleTCPConn(right, metadata)
 
 		return left, nil
 	}

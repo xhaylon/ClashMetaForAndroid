@@ -70,7 +70,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: ${{  success() }}
         with:
-          tag: ${{ github.ref_name }}
           tag_name: Prerelease-alpha
           files: app/build/outputs/apk/meta-alpha/release/*
           prerelease: true

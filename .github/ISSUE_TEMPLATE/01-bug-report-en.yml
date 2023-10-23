@@ -1,6 +1,7 @@
 name: "[English] Bug Report"
 description: "Create a report to help us debug bugs"
 title: "[BUG] "
+labels: ["bug"]
 body:
   - type: markdown
     attributes:

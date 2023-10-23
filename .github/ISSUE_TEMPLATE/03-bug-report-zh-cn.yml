@@ -1,6 +1,7 @@
 name: "[简体中文] 错误报告"
 description: "创建错误报告以帮助我们修正应用"
 title: "[BUG] "
+labels: ["bug"]
 body:
   - type: markdown
     attributes:

@@ -1,6 +1,7 @@
 name: "[简体中文] 功能请求"
 description: "您希望的能够在应用中增加功能"
 title: "[Feature Request] "
+labels: ["enhancement"]
 body:
   - type: markdown
     attributes:

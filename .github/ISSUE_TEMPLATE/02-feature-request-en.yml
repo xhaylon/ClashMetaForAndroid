@@ -1,6 +1,7 @@
 name: "[English] Feature Request"
 description: "Create a report to help us improve"
 title: "[Feature Request] "
+labels: ["enhancement"]
 body:
   - type: markdown
     attributes:

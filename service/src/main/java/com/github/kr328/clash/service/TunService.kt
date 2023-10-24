@@ -243,6 +243,7 @@ class TunService : VpnService(), CoroutineScope by CoroutineScope(Dispatchers.De
             "*zhimg.com",
             "*jd.com",
             "100ime-iat-api.xfyun.cn",
+            "*360buyimg.com",
         )
     }
 }

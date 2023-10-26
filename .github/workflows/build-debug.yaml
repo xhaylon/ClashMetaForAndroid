@@ -1,9 +1,11 @@
-name: Build Pre-Release
+name: Build Debug
 on:
+  pull_request:
+    types: [opened, reopened, synchronize]
   workflow_dispatch:
 
 jobs:
-  BuildPreRelease:
+  BuildUnsigned:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -46,34 +48,49 @@ jobs:
           echo "cat signing.properties"
           cat signing.properties
 
-      - name: Pre-release Build
+      - name: Build
         if: success()
         uses: gradle/gradle-build-action@v2
         with:
           arguments: --no-daemon app:assembleMeta-AlphaRelease
 
-      - name: Delete current release assets
-        uses: andreaswilli/delete-release-assets-action@v2.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: Prerelease-alpha
-          deleteOnlyFromDrafts: false
-
-      - name: Tag Repo
-        uses: richardsimko/update-tag@v1
-        with:
-          tag_name: Prerelease-alpha
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Alpha
-        uses: softprops/action-gh-release@v1
+          
+      - name: Upload Aritfact (universal)
+        uses: actions/upload-artifact@v3
         if: ${{  success() }}
         with:
-          tag_name: Prerelease-alpha
-          files: app/build/outputs/apk/meta-alpha/release/*
-          prerelease: true
-          generate_release_notes: true
-
-      - name: Release Changelog Builder
-        uses: mikepenz/release-changelog-builder-action@v3.6.0
+          name: CMFA Debug APK (universal) 
+          path: |
+            app/build/outputs/apk/meta-alpha/release/*-universal-*.apk
+      
+      - name: Upload Aritfact (arm64-v8a)
+        uses: actions/upload-artifact@v3
+        if: ${{  success() }}
+        with:
+          name: CMFA Debug APK (arm64-v8a)
+          path: |
+            app/build/outputs/apk/meta-alpha/release/*-arm64-v8a-*.apk
+      
+      - name: Upload Aritfact (armeabi-v7a)
+        uses: actions/upload-artifact@v3
+        if: ${{  success() }}
+        with:
+          name: CMFA Debug APK (armeabi-v7a)
+          path: |
+            app/build/outputs/apk/meta-alpha/release/*-armeabi-v7a-*.apk
+      
+      - name: Upload Aritfact (x86_64)
+        uses: actions/upload-artifact@v3
+        if: ${{  success() }}
+        with:
+          name: CMFA Debug APK (x86_64)
+          path: |
+            app/build/outputs/apk/meta-alpha/release/*-x86_64-*.apk
+      
+      - name: Upload Aritfact (x86)
+        uses: actions/upload-artifact@v3
+        if: ${{  success() }}
+        with:
+          name: CMFA Debug APK (x86)
+          path: |
+            app/build/outputs/apk/meta-alpha/release/*-x86-*.apk

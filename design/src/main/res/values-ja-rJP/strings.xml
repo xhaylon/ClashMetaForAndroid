@@ -234,4 +234,9 @@
     <string name="geox_geoip">GeoIP URL</string>
     <string name="geox_mmdb">MMDB URL</string>
     <string name="geox_geosite">Geosite URL</string>
+    <string name="geox_files" >Geo Files</string>
+    <string name="import_geoip_file">Import GeoIP Database</string>
+    <string name="press_to_import">Press to import...</string>
+    <string name="import_geosite_file">Import GeoSite Database</string>
+    <string name="import_country_file">Import Country Database</string>
 </resources>

@@ -15,7 +15,7 @@ class MetaFeatureSettingsDesign(
     configuration: ConfigurationOverride
 ) : Design<MetaFeatureSettingsDesign.Request>(context) {
     enum class Request {
-        ResetOverride
+        ResetOverride, ImportGeoIp, ImportGeoSite, ImportCountry
     }
 
     private val binding = DesignSettingsMetaFeatureBinding
@@ -198,6 +198,36 @@ class MetaFeatureSettingsDesign(
             )
 
             sniffer.listener?.onChanged()
+
+            category(R.string.geox_files)
+
+            clickable (
+                title = R.string.import_geoip_file,
+                summary = R.string.press_to_import,
+            ){
+                clicked {
+                    requests.trySend(Request.ImportGeoIp)
+                }
+            }
+
+            clickable (
+                title = R.string.import_geosite_file,
+                summary = R.string.press_to_import,
+            ){
+                clicked {
+                    requests.trySend(Request.ImportGeoSite)
+                }
+            }
+
+            clickable (
+                title = R.string.import_country_file,
+                summary = R.string.press_to_import,
+            ){
+                clicked {
+                    requests.trySend(Request.ImportCountry)
+                }
+            }
+
             /*
             category(R.string.geox_url_setting)
 

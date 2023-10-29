@@ -38,14 +38,17 @@ class MainApplication : Application() {
     }
 
     private fun extractGeoFiles() {
-        val geoipFile = File(filesDir, "clash/geoip.metadb")
+        val clashDir = File(filesDir, "clash")
+        clashDir.mkdirs();
+
+        val geoipFile = File(clashDir, "geoip.metadb")
         if(!geoipFile.exists()) {
             FileOutputStream(geoipFile).use {
                 assets.open("geoip.metadb").copyTo(it);
             }
         }
 
-        val geositeFile = File(filesDir, "clash/geosite.dat")
+        val geositeFile = File(clashDir, "geosite.dat")
         if(!geositeFile.exists()) {
             FileOutputStream(geositeFile).use {
                 assets.open("geosite.dat").copyTo(it);

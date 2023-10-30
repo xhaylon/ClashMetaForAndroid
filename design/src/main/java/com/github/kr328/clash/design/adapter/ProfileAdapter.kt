@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.kr328.clash.design.databinding.AdapterProfileBinding
+import com.github.kr328.clash.design.model.ProfilePageState
+import com.github.kr328.clash.design.model.ProxyPageState
 import com.github.kr328.clash.design.ui.ObservableCurrentTime
 import com.github.kr328.clash.design.util.layoutInflater
 import com.github.kr328.clash.service.model.Profile
@@ -18,6 +20,7 @@ class ProfileAdapter(
     private val currentTime = ObservableCurrentTime()
 
     var profiles: List<Profile> = emptyList()
+    val states = ProfilePageState()
 
     fun updateElapsed() {
         currentTime.update()

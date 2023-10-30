@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.github.kr328.clash.design.adapter.ProfileAdapter
 import com.github.kr328.clash.design.databinding.DesignProfilesBinding
 import com.github.kr328.clash.design.databinding.DialogProfilesMenuBinding
@@ -28,6 +30,13 @@ class ProfilesDesign(context: Context) : Design<ProfilesDesign.Request>(context)
     private val binding = DesignProfilesBinding
         .inflate(context.layoutInflater, context.root, false)
     private val adapter = ProfileAdapter(context, this::requestActive, this::showMenu)
+
+    private var allUpdating: Boolean
+        get() = adapter.states.allUpdating;
+        set(value) {
+            adapter.states.allUpdating = value
+        }
+    private val rotateAnimation : Animation = AnimationUtils.loadAnimation(context, R.anim.rotate_infinite)
 
     override val root: View
         get() = binding.root
@@ -84,7 +93,14 @@ class ProfilesDesign(context: Context) : Design<ProfilesDesign.Request>(context)
     }
 
     fun requestUpdateAll() {
+        allUpdating = true;
         requests.trySend(Request.UpdateAll)
+        changeUpdateAllButtonStatus()
+    }
+
+    fun finishUpdateAll() {
+        allUpdating = false;
+        changeUpdateAllButtonStatus()
     }
 
     fun requestCreate() {
@@ -117,5 +133,13 @@ class ProfilesDesign(context: Context) : Design<ProfilesDesign.Request>(context)
         requests.trySend(Request.Delete(profile))
 
         dialog.dismiss()
+    }
+
+    private fun changeUpdateAllButtonStatus() {
+        if (allUpdating) {
+            binding.updateView.startAnimation(rotateAnimation)
+        } else {
+            binding.updateView.clearAnimation()
+        }
     }
 }

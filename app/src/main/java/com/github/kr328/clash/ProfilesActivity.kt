@@ -6,8 +6,10 @@ import com.github.kr328.clash.common.util.ticker
 import com.github.kr328.clash.design.ProfilesDesign
 import com.github.kr328.clash.service.model.Profile
 import com.github.kr328.clash.util.withProfile
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.selects.select
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class ProfilesActivity : BaseActivity<ProfilesDesign>() {
@@ -34,9 +36,16 @@ class ProfilesActivity : BaseActivity<ProfilesDesign>() {
                             startActivity(NewProfileActivity::class.intent)
                         ProfilesDesign.Request.UpdateAll ->
                             withProfile {
-                                queryAll().forEach { p ->
-                                    if (p.imported && p.type != Profile.Type.File)
-                                        update(p.uuid)
+                                try {
+                                    queryAll().forEach { p ->
+                                        if (p.imported && p.type != Profile.Type.File)
+                                            update(p.uuid)
+                                    }
+                                }
+                                finally {
+                                    withContext(Dispatchers.Main) {
+                                        design.finishUpdateAll();
+                                    }
                                 }
                             }
                         is ProfilesDesign.Request.Update ->

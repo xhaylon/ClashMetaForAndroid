@@ -105,7 +105,7 @@ class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
                     val ext = "." + displayName.substringAfterLast(".")
                     if(!validDatabaseExtensions.contains(ext))
                     {
-                        val dialog = MaterialAlertDialogBuilder(this)
+                        MaterialAlertDialogBuilder(this)
                             .setTitle("Unknown Database Format")
                             .setMessage("Only ${validDatabaseExtensions.joinToString("/")} are supported")
                             .setPositiveButton("OK"){ _, _ -> }

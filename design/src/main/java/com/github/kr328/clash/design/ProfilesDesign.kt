@@ -94,8 +94,8 @@ class ProfilesDesign(context: Context) : Design<ProfilesDesign.Request>(context)
 
     fun requestUpdateAll() {
         allUpdating = true;
-        requests.trySend(Request.UpdateAll)
         changeUpdateAllButtonStatus()
+        requests.trySend(Request.UpdateAll)
     }
 
     fun finishUpdateAll() {

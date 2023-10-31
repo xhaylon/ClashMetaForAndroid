@@ -1,25 +1,41 @@
 package com.github.kr328.clash
 
-import android.R
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
 import android.database.Cursor
+import android.net.Uri
+import android.os.Bundle
 import android.provider.OpenableColumns
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.github.kr328.clash.core.Clash
 import com.github.kr328.clash.design.MetaFeatureSettingsDesign
 import com.github.kr328.clash.util.withClash
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
-import kotlin.coroutines.resume
 
 
 class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
+
+    private val geoipDbImporter = registerForActivityResult(ActivityResultContracts.GetContent()){
+        launch{
+            geoFilesImported(it, MetaFeatureSettingsDesign.Request.ImportGeoIp)
+        }
+    }
+    private val geositeDbImporter = registerForActivityResult(ActivityResultContracts.GetContent()){
+        launch{
+            geoFilesImported(it, MetaFeatureSettingsDesign.Request.ImportGeoSite)
+        }
+    }
+    private val countryDbImporter = registerForActivityResult(ActivityResultContracts.GetContent()){
+        launch{
+            geoFilesImported(it, MetaFeatureSettingsDesign.Request.ImportCountry)
+        }
+    }
     override suspend fun main() {
         val configuration = withClash { queryOverride(Clash.OverrideSlot.Persist) }
 
@@ -50,36 +66,17 @@ class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
                                         clearOverride(Clash.OverrideSlot.Persist)
                                     }
                                 }
-
                                 finish()
                             }
                         }
                         MetaFeatureSettingsDesign.Request.ImportGeoIp -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            intent.addCategory(Intent.CATEGORY_OPENABLE)
-                            startActivityForResult(
-                                intent,
-                                MetaFeatureSettingsDesign.Request.ImportGeoIp.ordinal
-                            )
+                            geoipDbImporter.launch("*/*")
                         }
                         MetaFeatureSettingsDesign.Request.ImportGeoSite -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            intent.addCategory(Intent.CATEGORY_OPENABLE)
-                            startActivityForResult(
-                                intent,
-                                MetaFeatureSettingsDesign.Request.ImportGeoSite.ordinal
-                            )
+                            geositeDbImporter.launch("*/*")
                         }
                         MetaFeatureSettingsDesign.Request.ImportCountry -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            intent.addCategory(Intent.CATEGORY_OPENABLE)
-                            startActivityForResult(
-                                intent,
-                                MetaFeatureSettingsDesign.Request.ImportCountry.ordinal
-                            )
+                            countryDbImporter.launch("*/*")
                         }
                     }
                 }
@@ -87,57 +84,53 @@ class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
         }
     }
 
-    public val validDatabaseExtensions = listOf(
+    private val validDatabaseExtensions = listOf(
         ".metadb", ".db", ".dat", ".mmdb"
     )
-    @SuppressLint("Range")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, resultData)
-        if(resultCode == RESULT_OK) {
-            val uri = resultData?.data
-            val cursor: Cursor? = uri?.let {
-                contentResolver.query(it, null, null, null, null, null)
-            }
-            cursor?.use {
-                if (it.moveToFirst()) {
-                    val displayName: String =
-                        it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                    val ext = "." + displayName.substringAfterLast(".")
-                    if(!validDatabaseExtensions.contains(ext))
-                    {
-                        MaterialAlertDialogBuilder(this)
-                            .setTitle("Unknown Database Format")
-                            .setMessage("Only ${validDatabaseExtensions.joinToString("/")} are supported")
-                            .setPositiveButton("OK"){ _, _ -> }
-                            .show()
-                        return
-                    }
-                    val outputFileName = when (requestCode) {
-                        MetaFeatureSettingsDesign.Request.ImportGeoIp.ordinal ->
-                            "geoip$ext"
-                        MetaFeatureSettingsDesign.Request.ImportGeoSite.ordinal ->
-                            "geosite$ext"
-                        MetaFeatureSettingsDesign.Request.ImportCountry.ordinal ->
-                            "country$ext"
-                        else -> ""
-                    }
-                    if(outputFileName.isEmpty())
-                    {
-                        Toast.makeText(this, "Bad request", Toast.LENGTH_LONG).show()
-                        return
-                    }
 
+    private suspend fun geoFilesImported(uri: Uri?, importType: MetaFeatureSettingsDesign.Request) {
+        val cursor: Cursor? = uri?.let {
+            contentResolver.query(it, null, null, null, null, null)
+        }
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val columnIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                val displayName: String =
+                    if (columnIndex != -1) it.getString(columnIndex) else "";
+                val ext = "." + displayName.substringAfterLast(".")
+
+                if (!validDatabaseExtensions.contains(ext)) {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.geofile_unknown_db_format)
+                        .setMessage(getString(R.string.geofile_unknown_db_format_message,
+                            validDatabaseExtensions.joinToString("/")))
+                        .setPositiveButton("OK") { _, _ -> }
+                        .show()
+                    return
+                }
+                val outputFileName = when (importType) {
+                    MetaFeatureSettingsDesign.Request.ImportGeoIp ->
+                        "geoip$ext"
+                    MetaFeatureSettingsDesign.Request.ImportGeoSite ->
+                        "geosite$ext"
+                    MetaFeatureSettingsDesign.Request.ImportCountry ->
+                        "country$ext"
+                    else -> ""
+                }
+
+                withContext(Dispatchers.IO) {
                     val outputFile = File(File(filesDir, "clash"), outputFileName);
-                    contentResolver.openInputStream(uri).use { ins->
-                        FileOutputStream(outputFile).use { outs->
+                    contentResolver.openInputStream(uri).use { ins ->
+                        FileOutputStream(outputFile).use { outs ->
                             ins?.copyTo(outs)
                         }
                     }
-                    Toast.makeText(this, "$displayName imported", Toast.LENGTH_LONG).show()
-                    return
                 }
+                Toast.makeText(this, getString(R.string.geofile_imported, displayName),
+                    Toast.LENGTH_LONG).show()
+                return
             }
         }
-        Toast.makeText(this, "Import failed", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, R.string.geofile_import_failed, Toast.LENGTH_LONG).show()
     }
 }

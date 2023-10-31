@@ -239,4 +239,8 @@
     <string name="press_to_import">Press to import...</string>
     <string name="import_geosite_file">导入 GeoSite 数据库</string>
     <string name="import_country_file">导入 Country 数据库</string>
+    <string name="geofile_import_failed">Import failed</string>
+    <string name="geofile_unknown_db_format">Unknown Database format</string>
+    <string name="geofile_unknown_db_format_message">Only %1$s are supported</string>
+    <string name="geofile_imported">%1$s imported</string>
 </resources>

@@ -243,4 +243,6 @@
     <string name="geofile_unknown_db_format">Unknown Database format</string>
     <string name="geofile_unknown_db_format_message">Only %1$s are supported</string>
     <string name="geofile_imported">%1$s imported</string>
+    <string name="toast_profile_updated_complete">Update profile %s completed</string>
+    <string name="toast_profile_updated_failed">Update profile %1$s failed: %2$s</string>
 </resources>

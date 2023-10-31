@@ -14,6 +14,8 @@ object Intents {
     val ACTION_CLASH_STOPPED = "$packageName.intent.action.CLASH_STOPPED"
     val ACTION_CLASH_REQUEST_STOP = "$packageName.intent.action.CLASH_REQUEST_STOP"
     val ACTION_PROFILE_CHANGED = "$packageName.intent.action.PROFILE_CHANGED"
+    val ACTION_PROFILE_UPDATE_COMPLETED = "$packageName.intent.action.PROFILE_UPDATE_COMPLETED"
+    val ACTION_PROFILE_UPDATE_FAILED = "$packageName.intent.action.PROFILE_UPDATE_FAILED"
     val ACTION_PROFILE_REQUEST_UPDATE = "$packageName.intent.action.REQUEST_UPDATE"
     val ACTION_PROFILE_SCHEDULE_UPDATES = "$packageName.intent.action.SCHEDULE_UPDATES"
     val ACTION_PROFILE_LOADED = "$packageName.intent.action.PROFILE_LOADED"
@@ -21,4 +23,5 @@ object Intents {
 
     const val EXTRA_STOP_REASON = "stop_reason"
     const val EXTRA_UUID = "uuid"
+    const val EXTRA_FAIL_REASON = "fail_reason"
 }

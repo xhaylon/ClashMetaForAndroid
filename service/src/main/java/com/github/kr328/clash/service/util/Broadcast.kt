@@ -27,6 +27,21 @@ fun Context.sendProfileLoaded(uuid: UUID) {
     sendBroadcastSelf(intent)
 }
 
+fun Context.sendProfileUpdateCompleted(uuid: UUID) {
+    val intent = Intent(Intents.ACTION_PROFILE_UPDATE_COMPLETED)
+        .putExtra(Intents.EXTRA_UUID, uuid.toString())
+
+    sendBroadcastSelf(intent)
+}
+
+fun Context.sendProfileUpdateFailed(uuid: UUID, reason: String) {
+    val intent = Intent(Intents.ACTION_PROFILE_UPDATE_FAILED)
+        .putExtra(Intents.EXTRA_UUID, uuid.toString())
+        .putExtra(Intents.EXTRA_FAIL_REASON, reason)
+
+    sendBroadcastSelf(intent)
+}
+
 fun Context.sendOverrideChanged() {
     val intent = Intent(Intents.ACTION_OVERRIDE_CHANGED)
 

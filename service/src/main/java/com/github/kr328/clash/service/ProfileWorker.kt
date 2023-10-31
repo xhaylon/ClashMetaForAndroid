@@ -15,6 +15,8 @@ import com.github.kr328.clash.common.id.UndefinedIds
 import com.github.kr328.clash.common.util.setUUID
 import com.github.kr328.clash.common.util.uuid
 import com.github.kr328.clash.service.data.ImportedDao
+import com.github.kr328.clash.service.util.sendProfileUpdateCompleted
+import com.github.kr328.clash.service.util.sendProfileUpdateFailed
 import kotlinx.coroutines.*
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -176,6 +178,8 @@ class ProfileWorker : BaseService() {
 
         NotificationManagerCompat.from(this)
             .notify(id, notification)
+
+        sendProfileUpdateCompleted(uuid)
     }
 
     private fun failed(uuid: UUID, name: String, reason: String) {
@@ -191,6 +195,8 @@ class ProfileWorker : BaseService() {
 
         NotificationManagerCompat.from(this)
             .notify(id, notification)
+
+        sendProfileUpdateFailed(uuid, reason)
     }
 
     companion object {

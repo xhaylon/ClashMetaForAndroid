@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import com.github.kr328.clash.common.constants.Intents
 import com.github.kr328.clash.common.log.Log
+import java.util.*
 
 class Broadcasts(private val context: Application) {
     interface Observer {
@@ -14,6 +15,8 @@ class Broadcasts(private val context: Application) {
         fun onStarted()
         fun onStopped(cause: String?)
         fun onProfileChanged()
+        fun onProfileUpdateCompleted(uuid: UUID?)
+        fun onProfileUpdateFailed(uuid: UUID?, reason: String?)
         fun onProfileLoaded()
     }
 
@@ -52,6 +55,17 @@ class Broadcasts(private val context: Application) {
                     receivers.forEach {
                         it.onProfileChanged()
                     }
+                Intents.ACTION_PROFILE_UPDATE_COMPLETED ->
+                    receivers.forEach {
+                        it.onProfileUpdateCompleted(
+                            UUID.fromString(intent.getStringExtra(Intents.EXTRA_UUID)))
+                    }
+                Intents.ACTION_PROFILE_UPDATE_FAILED ->
+                    receivers.forEach {
+                        it.onProfileUpdateFailed(
+                            UUID.fromString(intent.getStringExtra(Intents.EXTRA_UUID)),
+                            intent.getStringExtra(Intents.EXTRA_FAIL_REASON))
+                    }
                 Intents.ACTION_PROFILE_LOADED -> {
                     receivers.forEach {
                         it.onProfileLoaded()
@@ -79,6 +93,8 @@ class Broadcasts(private val context: Application) {
                 addAction(Intents.ACTION_CLASH_STARTED)
                 addAction(Intents.ACTION_CLASH_STOPPED)
                 addAction(Intents.ACTION_PROFILE_CHANGED)
+                addAction(Intents.ACTION_PROFILE_UPDATE_COMPLETED)
+                addAction(Intents.ACTION_PROFILE_UPDATE_FAILED)
                 addAction(Intents.ACTION_PROFILE_LOADED)
             })
 

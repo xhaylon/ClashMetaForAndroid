@@ -24,6 +24,7 @@ import com.github.kr328.clash.util.ActivityResultLifecycle
 import com.github.kr328.clash.util.ApplicationObserver
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
+import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -39,7 +40,9 @@ abstract class BaseActivity<D : Design<*>> :
         ClashStop,
         ClashStart,
         ProfileLoaded,
-        ProfileChanged
+        ProfileChanged,
+        ProfileUpdateCompleted,
+        ProfileUpdateFailed
     }
 
 
@@ -175,6 +178,14 @@ abstract class BaseActivity<D : Design<*>> :
 
     override fun onProfileChanged() {
         events.trySend(Event.ProfileChanged)
+    }
+
+    override fun onProfileUpdateCompleted(uuid: UUID?) {
+        events.trySend(Event.ProfileUpdateCompleted)
+    }
+
+    override fun onProfileUpdateFailed(uuid: UUID?, reason: String?) {
+        events.trySend(Event.ProfileUpdateFailed)
     }
 
     override fun onProfileLoaded() {

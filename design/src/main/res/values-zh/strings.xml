@@ -239,10 +239,10 @@
     <string name="press_to_import">Press to import...</string>
     <string name="import_geosite_file">导入 GeoSite 数据库</string>
     <string name="import_country_file">导入 Country 数据库</string>
-    <string name="geofile_import_failed">Import failed</string>
-    <string name="geofile_unknown_db_format">Unknown Database format</string>
-    <string name="geofile_unknown_db_format_message">Only %1$s are supported</string>
-    <string name="geofile_imported">%1$s imported</string>
-    <string name="toast_profile_updated_complete">Update profile %s completed</string>
-    <string name="toast_profile_updated_failed">Update profile %1$s failed: %2$s</string>
+    <string name="geofile_import_failed">导入失败</string>
+    <string name="geofile_unknown_db_format">数据库类型错误</string>
+    <string name="geofile_unknown_db_format_message">只支持 %1$s 格式的Geo数据库</string>
+    <string name="geofile_imported">%1$s 已导入</string>
+    <string name="toast_profile_updated_complete">更新配置 %s 成功</string>
+    <string name="toast_profile_updated_failed">更新配置 %1$s 失败: %2$s</string>
 </resources>

@@ -132,6 +132,9 @@
     <string name="use_built_in">使用内置</string>
     <string name="mapping">Real-IP 至 域名映射</string>
     <string name="fakeip">Fake-IP 至 域名映射</string>
+    <string name="off">OFF</string>
+    <string name="strict">Strict</string>
+    <string name="always">Always</string>
     <string name="sort">排序</string>
     <string name="layout">布局</string>
     <string name="single">单列</string>
@@ -219,7 +222,7 @@
     <string name="unified_delay">Unified Delay</string>
     <string name="geodata_mode">Geodata Mode</string>
     <string name="tcp_concurrent">TCP Concurrent</string>
-    <string name="enable_process">Enable Process</string>
+    <string name="find_process_mode">Find Process Mode</string>
     <string name="sniffer_setting">Sniffer Setting</string>
     <string name="sniffer">Sniffer</string>
     <string name="sniffing">Sniffer Mode</string>

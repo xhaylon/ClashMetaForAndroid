@@ -53,8 +53,8 @@ data class ConfigurationOverride(
     @SerialName("tcp-concurrent")
     var tcpConcurrent: Boolean? = null,
 
-    @SerialName("enable-process")
-    var enableProcess: Boolean? = null,
+    @SerialName("find-process-mode")
+    var findProcessMode: FindProcessMode? = null,
 
     @SerialName("dns")
     val dns: Dns = Dns(),
@@ -128,6 +128,17 @@ data class ConfigurationOverride(
         var appendSystemDns: Boolean? = null
     )
 
+    @Serializable
+    enum class FindProcessMode {
+        @SerialName("off")
+        Off,
+
+        @SerialName("strict")
+        Strict,
+
+        @SerialName("always")
+        Always,
+    }
     @Serializable
     enum class DnsEnhancedMode {
         @SerialName("normal")

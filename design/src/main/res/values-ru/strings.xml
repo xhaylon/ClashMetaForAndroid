@@ -180,6 +180,9 @@
 
     <string name="mapping">Сопоставление реальных IP доменам</string>
     <string name="fakeip">Сопоставление подставных IP доменам</string>
+    <string name="off">Принудительно закрыть</string>
+    <string name="strict">Следовать настройкам конфигурации</string>
+    <string name="always">Принудительно включить</string>
 
     <string name="system_apps">Системные приложения</string>
     <string name="filter">Фильтр</string>
@@ -280,7 +283,7 @@
     <string name="unified_delay">Унифицированная задержка</string>
     <string name="geodata_mode">Режим геоданных</string>
     <string name="tcp_concurrent">Многопоточный TCP</string>
-    <string name="enable_process">Использовать процессы в правилах</string>
+    <string name="find_process_mode">Найти режим процесса</string>
 
     <string name="sniffer_setting">Настройки перехвата доменов</string>
     <string name="sniffer">Перехват доменов</string>

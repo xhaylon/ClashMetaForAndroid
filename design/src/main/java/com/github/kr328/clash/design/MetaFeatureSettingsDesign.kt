@@ -87,11 +87,23 @@ class MetaFeatureSettingsDesign(
             )
 
             selectableList(
-                value = configuration::enableProcess,
-                values = booleanValues,
-                valuesText = booleanValuesText,
-                title = R.string.enable_process,
-            )
+                value = configuration::findProcessMode,
+                values = arrayOf(
+                    null,
+                    ConfigurationOverride.FindProcessMode.Off,
+                    ConfigurationOverride.FindProcessMode.Strict,
+                    ConfigurationOverride.FindProcessMode.Always
+                ),
+                valuesText = arrayOf(
+                    R.string.dont_modify,
+                    R.string.off,
+                    R.string.strict,
+                    R.string.always,
+                ),
+                title = R.string.find_process_mode,
+            ) {
+
+            }
 
             category(R.string.dns)
 

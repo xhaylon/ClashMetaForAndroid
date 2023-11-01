@@ -181,6 +181,10 @@
     <string name="mapping">Real-IP to domain mapping</string>
     <string name="fakeip">Fake-IP to domain mapping</string>
 
+    <string name="off">OFF</string>
+    <string name="strict">Strict</string>
+    <string name="always">Always</string>
+
     <string name="system_apps">System Apps</string>
     <string name="filter">Filter</string>
     <string name="package_name">Package Name</string>
@@ -280,7 +284,7 @@
     <string name="unified_delay">Unified Delay</string>
     <string name="geodata_mode">Geodata Mode</string>
     <string name="tcp_concurrent">TCP Concurrent</string>
-    <string name="enable_process">Enable Process</string>
+    <string name="find_process_mode">Find Process Mode</string>
 
     <string name="sniffer_setting">Sniffer Setting</string>
     <string name="sniffer">Sniffer</string>

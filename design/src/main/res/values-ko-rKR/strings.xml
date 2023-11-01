@@ -148,6 +148,9 @@
     <string name="force_enable">강제 활성화</string>
     <string name="mapping">Real-IP - 도메인 매핑</string>
     <string name="fakeip">Fake-IP - 도메인 매핑</string>
+    <string name="off">강제 종료</string>
+    <string name="strict">구성 설정에 따름</string>
+    <string name="always">강제로 켜기</string>
     <string name="system_apps">시스템 앱</string>
     <string name="filter">필터</string>
     <string name="package_name">패키지 이름</string>
@@ -220,7 +223,7 @@
     <string name="unified_delay">Unified Delay</string>
     <string name="geodata_mode">Geodata 모드</string>
     <string name="tcp_concurrent">TCP Concorrent</string>
-    <string name="enable_process">프로세스 실행</string>
+    <string name="find_process_mode">프로세스 모드 찾기</string>
     <string name="sniffer_setting">Sniffer 설정</string>
     <string name="sniffer">Sniffer</string>
     <string name="sniffing">Sniffer 모드</string>

@@ -148,6 +148,9 @@
     <string name="force_enable">強制的に有効</string>
     <string name="mapping">Real-IPをドメインマッピング</string>
     <string name="fakeip">Fake-IPをドメインマッピング</string>
+    <string name="off">OFF</string>
+    <string name="strict">Strict</string>
+    <string name="always">Always</string>
     <string name="system_apps">システムアプリ</string>
     <string name="filter">フィルタ</string>
     <string name="package_name">パッケージ名</string>
@@ -220,7 +223,7 @@
     <string name="unified_delay">Unified Delay</string>
     <string name="geodata_mode">Geodata Mode</string>
     <string name="tcp_concurrent">TCP Concurrent</string>
-    <string name="enable_process">Enable Process</string>
+    <string name="find_process_mode">Find Process Mode</string>
     <string name="sniffer_setting">Sniffer Setting</string>
     <string name="sniffer">Sniffer</string>
     <string name="sniffing">Sniffer Mode</string>

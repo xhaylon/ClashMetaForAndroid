@@ -55,9 +55,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ExternalImportActivity"
+            android:name=".ExternalControlActivity"
             android:exported="true"
-            android:label="@string/import_from_file"
+            android:label="@string/external_control_activity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -68,6 +68,18 @@
                 <data android:scheme="clash"/>
                 <data android:scheme="clashmeta"/>
                 <data android:host="install-config"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.github.metacubex.clash.meta.action.START_CLASH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.github.metacubex.clash.meta.action.STOP_CLASH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.github.metacubex.clash.meta.action.TOGGLE_CLASH" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity

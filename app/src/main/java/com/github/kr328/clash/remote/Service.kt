@@ -33,8 +33,7 @@ class Service(private val context: Application, val crashed: () -> Unit) {
             }
 
             lastCrashed = System.currentTimeMillis()
-
-            Log.w("RemoteManager crashed")
+            Log.w("RemoteService killed or crashed")
         }
     }
 

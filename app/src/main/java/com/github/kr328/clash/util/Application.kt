@@ -9,7 +9,8 @@ import java.io.File
 import java.util.zip.ZipFile
 
 object ApplicationObserver {
-    private val activities: MutableSet<Activity> = mutableSetOf()
+    private val _createdActivities: MutableSet<Activity> = mutableSetOf()
+    private val _visibleActivities: MutableSet<Activity> = mutableSetOf()
 
     private var visibleChanged: (Boolean) -> Unit = {}
 
@@ -23,25 +24,31 @@ object ApplicationObserver {
         }
 
     val createdActivities: Set<Activity>
-        get() = activities
+        get() = _createdActivities
 
     private val activityObserver = object : Application.ActivityLifecycleCallbacks {
         @Synchronized
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            activities.add(activity)
-
-            appVisible = true
+            _createdActivities.add(activity)
         }
 
         @Synchronized
         override fun onActivityDestroyed(activity: Activity) {
-            activities.remove(activity)
-
-            appVisible = activities.isNotEmpty()
+            _createdActivities.remove(activity)
+            _visibleActivities.remove(activity)
+            appVisible = _visibleActivities.isNotEmpty()
         }
 
-        override fun onActivityStarted(activity: Activity) {}
-        override fun onActivityStopped(activity: Activity) {}
+        override fun onActivityStarted(activity: Activity) {
+            _visibleActivities.add(activity)
+            appVisible = true
+        }
+
+        override fun onActivityStopped(activity: Activity) {
+            _visibleActivities.remove(activity)
+            appVisible = _visibleActivities.isNotEmpty()
+        }
+
         override fun onActivityPaused(activity: Activity) {}
         override fun onActivityResumed(activity: Activity) {}
         override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}

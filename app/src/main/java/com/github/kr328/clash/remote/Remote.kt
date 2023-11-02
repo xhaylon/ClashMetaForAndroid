@@ -5,6 +5,7 @@ import android.content.Intent
 import com.github.kr328.clash.ApkBrokenActivity
 import com.github.kr328.clash.AppCrashedActivity
 import com.github.kr328.clash.common.Global
+import com.github.kr328.clash.common.log.Log
 import com.github.kr328.clash.common.util.intent
 import com.github.kr328.clash.store.AppStore
 import com.github.kr328.clash.util.ApplicationObserver
@@ -29,14 +30,25 @@ object Remote {
     fun launch() {
         ApplicationObserver.attach(Global.application)
 
-        ApplicationObserver.onVisibleChanged { visible.trySend(it) }
+        ApplicationObserver.onVisibleChanged {
+            if(it) {
+                Log.d("App becomes visible")
+                service.bind()
+                broadcasts.register()
+            }
+            else {
+                Log.d("App becomes invisible")
+                service.unbind()
+                broadcasts.unregister()
+            }
+        }
 
         Global.launch(Dispatchers.IO) {
-            run()
+            verifyApp()
         }
     }
 
-    private suspend fun run() {
+    private suspend fun verifyApp() {
         val context = Global.application
         val store = AppStore(context)
         val updatedAt = getLastUpdated(context)
@@ -51,16 +63,6 @@ object Remote {
                 return context.startActivity(intent)
             } else {
                 store.updatedAt = updatedAt
-            }
-        }
-
-        while (true) {
-            if (visible.receive()) {
-                service.bind()
-                broadcasts.register()
-            } else {
-                service.unbind()
-                broadcasts.unregister()
             }
         }
     }

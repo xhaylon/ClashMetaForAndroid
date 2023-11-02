@@ -117,9 +117,9 @@ class MetaFeatureSettingsDesign(
                     false
                 ),
                 valuesText = arrayOf(
-                    R.string.sniffer_config,
-                    R.string.sniffer_override,
-                    R.string.disable_sniffer,
+                    R.string.dont_modify,
+                    R.string.enabled,
+                    R.string.disabled
                 ),
                 title = R.string.strategy
             ) {
@@ -141,6 +141,30 @@ class MetaFeatureSettingsDesign(
                 adapter = TextAdapter.String,
                 title = R.string.sniffing,
                 placeholder = R.string.dont_modify,
+                configure = snifferDependencies::add,
+            )
+
+            selectableList(
+                value = configuration.sniffer::forceDnsMapping,
+                values = booleanValues,
+                valuesText = booleanValuesText,
+                title = R.string.force_dns_mapping,
+                configure = snifferDependencies::add,
+            )
+
+            selectableList(
+                value = configuration.sniffer::parsePureIp,
+                values = booleanValues,
+                valuesText = booleanValuesText,
+                title = R.string.parse_pure_ip,
+                configure = snifferDependencies::add,
+            )
+
+            selectableList(
+                value = configuration.sniffer::overrideDestination,
+                values = booleanValues,
+                valuesText = booleanValuesText,
+                title = R.string.override_destination,
                 configure = snifferDependencies::add,
             )
 
@@ -170,6 +194,39 @@ class MetaFeatureSettingsDesign(
 
             sniffer.listener?.onChanged()
 
+            /*
+            category(R.string.geox_url_setting)
+
+            val geoxUrlDependencies: MutableList<Preference> = mutableListOf()
+
+            editableText(
+                value = configuration.geoxurl::geoip,
+                adapter = NullableTextAdapter.String,
+                title = R.string.geox_geoip,
+                placeholder = R.string.dont_modify,
+                empty = R.string.geoip_url,
+                configure = geoxUrlDependencies::add,
+            )
+
+            editableText(
+                value = configuration.geoxurl::mmdb,
+                adapter = NullableTextAdapter.String,
+                title = R.string.geox_mmdb,
+                placeholder = R.string.dont_modify,
+                empty = R.string.mmdb_url,
+                configure = geoxUrlDependencies::add,
+            )
+
+            editableText(
+                value = configuration.geoxurl::geosite,
+                adapter = NullableTextAdapter.String,
+                title = R.string.geox_geosite,
+                placeholder = R.string.dont_modify,
+                empty = R.string.geosite_url,
+                configure = geoxUrlDependencies::add,
+            )
+            */
+
             category(R.string.geox_files)
 
             clickable (
@@ -198,38 +255,6 @@ class MetaFeatureSettingsDesign(
                     requests.trySend(Request.ImportCountry)
                 }
             }
-
-            /*
-            category(R.string.geox_url_setting)
-
-            val geoxurlDependencies: MutableList<Preference> = mutableListOf()
-
-            editableText(
-                value = configuration.geoxurl::geoip,
-                adapter = NullableTextAdapter.String,
-                title = R.string.geox_geoip,
-                placeholder = R.string.dont_modify,
-                empty = R.string.geoip_url,
-                configure = geoxurlDependencies::add,
-            )
-
-            editableText(
-                value = configuration.geoxurl::mmdb,
-                adapter = NullableTextAdapter.String,
-                title = R.string.geox_mmdb,
-                placeholder = R.string.dont_modify,
-                empty = R.string.mmdb_url,
-                configure = geoxurlDependencies::add,
-            )
-
-            editableText(
-                value = configuration.geoxurl::geosite,
-                adapter = NullableTextAdapter.String,
-                title = R.string.geox_geosite,
-                placeholder = R.string.dont_modify,
-                empty = R.string.geosite_url,
-                configure = geoxurlDependencies::add,
-            ) */
         }
 
         binding.content.addView(screen.root)

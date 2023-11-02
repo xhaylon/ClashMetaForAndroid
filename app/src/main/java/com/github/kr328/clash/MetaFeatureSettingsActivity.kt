@@ -2,7 +2,6 @@ package com.github.kr328.clash
 
 import android.database.Cursor
 import android.net.Uri
-import android.os.Bundle
 import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,7 +12,6 @@ import com.github.kr328.clash.util.withClash
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -58,19 +56,19 @@ class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
                             val uri = startActivityForResult(
                                 ActivityResultContracts.GetContent(),
                                 "*/*")
-                            geoFilesImported(uri, MetaFeatureSettingsDesign.Request.ImportGeoIp)
+                            importGeoFile(uri, MetaFeatureSettingsDesign.Request.ImportGeoIp)
                         }
                         MetaFeatureSettingsDesign.Request.ImportGeoSite -> {
                             val uri = startActivityForResult(
                                 ActivityResultContracts.GetContent(),
                                 "*/*")
-                            geoFilesImported(uri, MetaFeatureSettingsDesign.Request.ImportGeoSite)
+                            importGeoFile(uri, MetaFeatureSettingsDesign.Request.ImportGeoSite)
                         }
                         MetaFeatureSettingsDesign.Request.ImportCountry -> {
                             val uri = startActivityForResult(
                                 ActivityResultContracts.GetContent(),
                                 "*/*")
-                            geoFilesImported(uri, MetaFeatureSettingsDesign.Request.ImportCountry)
+                            importGeoFile(uri, MetaFeatureSettingsDesign.Request.ImportCountry)
                         }
                     }
                 }
@@ -82,7 +80,7 @@ class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
         ".metadb", ".db", ".dat", ".mmdb"
     )
 
-    private suspend fun geoFilesImported(uri: Uri?, importType: MetaFeatureSettingsDesign.Request) {
+    private suspend fun importGeoFile(uri: Uri?, importType: MetaFeatureSettingsDesign.Request) {
         val cursor: Cursor? = uri?.let {
             contentResolver.query(it, null, null, null, null, null)
         }

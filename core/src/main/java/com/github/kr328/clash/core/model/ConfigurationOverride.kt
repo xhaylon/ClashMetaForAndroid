@@ -159,6 +159,15 @@ data class ConfigurationOverride(
         @SerialName("sniffing")
         var sniffing: List<String>? = null,
 
+        @SerialName("force-dns-mapping")
+        var forceDnsMapping: Boolean? = null,
+
+        @SerialName("parse-pure-ip")
+        var parsePureIp: Boolean? = null,
+
+        @SerialName("override-destination")
+        var overrideDestination: Boolean? = null,
+
         @SerialName("force-domain")
         var forceDomain: List<String>? = null,
 

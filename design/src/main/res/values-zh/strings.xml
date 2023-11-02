@@ -251,4 +251,7 @@
     <string name="external_control_activity">External Control</string>
     <string name="external_control_started">Clash.Meta 服务已启动</string>
     <string name="external_control_stopped">Clash.Meta 服务已停止</string>
+    <string name="force_dns_mapping">Force DNS Mapping</string>
+    <string name="parse_pure_ip">Parse Pure IP</string>
+    <string name="override_destination">Override Destination</string>
 </resources>

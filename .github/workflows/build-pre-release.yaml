@@ -52,12 +52,12 @@ jobs:
         with:
           arguments: --no-daemon app:assembleMeta-AlphaRelease
 
-      - name: Delete current release assets
-        uses: andreaswilli/delete-release-assets-action@v2.0.0
+      # Delete old Prerelease-alpha
+      - uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
+          tag_name: Prerelease-alpha
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: Prerelease-alpha
-          deleteOnlyFromDrafts: false
+          delete_release: true
 
       - name: Tag Repo
         uses: richardsimko/update-tag@v1

@@ -105,47 +105,6 @@ class MetaFeatureSettingsDesign(
 
             }
 
-            category(R.string.dns)
-
-            val dnsDependencies: MutableList<Preference> = mutableListOf()
-
-            val dns = selectableList(
-                value = configuration.dns::enable,
-                values = arrayOf(
-                    null,
-                    true,
-                    false
-                ),
-                valuesText = arrayOf(
-                    R.string.dont_modify,
-                    R.string.force_enable,
-                    R.string.use_built_in,
-                ),
-                title = R.string.strategy
-            ) {
-                listener = OnChangedListener {
-                    if (configuration.dns.enable == false) {
-                        dnsDependencies.forEach {
-                            it.enabled = false
-                        }
-                    } else {
-                        dnsDependencies.forEach {
-                            it.enabled = true
-                        }
-                    }
-                }
-            }
-
-            selectableList(
-                value = configuration.dns::preferH3,
-                values = booleanValues,
-                valuesText = booleanValuesText,
-                title = R.string.prefer_h3,
-                configure = dnsDependencies::add,
-            )
-
-            dns.listener?.onChanged()
-
             category(R.string.sniffer_setting)
 
             val snifferDependencies: MutableList<Preference> = mutableListOf()

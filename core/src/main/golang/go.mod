@@ -55,7 +55,7 @@ require (
 	github.com/metacubex/sing-quic v0.0.0-20231008050747-a684db516966 // indirect
 	github.com/metacubex/sing-shadowsocks v0.2.5 // indirect
 	github.com/metacubex/sing-shadowsocks2 v0.1.4 // indirect
-	github.com/metacubex/sing-tun v0.1.15-0.20231022153326-92d6e97f0700 // indirect
+	github.com/metacubex/sing-tun v0.1.15-0.20231102032628-0f8a17217e56 // indirect
 	github.com/metacubex/sing-vmess v0.1.9-0.20230921005247-a0488d7dac74 // indirect
 	github.com/metacubex/sing-wireguard v0.0.0-20231001110902-321836559170 // indirect
 	github.com/mroth/weightedrand/v2 v2.1.0 // indirect
@@ -93,6 +93,7 @@ require (
 	gitlab.com/yawning/bsaes.git v0.0.0-20190805113838-0a714cd429ec // indirect
 	go.etcd.io/bbolt v1.3.7 // indirect
 	go.uber.org/mock v0.3.0 // indirect
+	go4.org/netipx v0.0.0-20230824141953-6213f710f925 // indirect
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
 	golang.org/x/mod v0.13.0 // indirect

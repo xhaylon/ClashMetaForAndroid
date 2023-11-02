@@ -7,6 +7,7 @@ import com.github.kr328.clash.common.compat.currentProcessName
 import com.github.kr328.clash.common.log.Log
 import com.github.kr328.clash.remote.Remote
 import com.github.kr328.clash.service.util.sendServiceRecreated
+import com.github.kr328.clash.util.clashDir
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -38,7 +39,6 @@ class MainApplication : Application() {
     }
 
     private fun extractGeoFiles() {
-        val clashDir = File(filesDir, "clash")
         clashDir.mkdirs();
 
         val geoipFile = File(clashDir, "geoip.metadb")

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.github.kr328.clash.core.Clash
 import com.github.kr328.clash.design.MetaFeatureSettingsDesign
+import com.github.kr328.clash.util.clashDir
 import com.github.kr328.clash.util.withClash
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
@@ -20,22 +21,6 @@ import java.io.FileOutputStream
 
 
 class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
-
-    private val geoipDbImporter = registerForActivityResult(ActivityResultContracts.GetContent()){
-        launch{
-            geoFilesImported(it, MetaFeatureSettingsDesign.Request.ImportGeoIp)
-        }
-    }
-    private val geositeDbImporter = registerForActivityResult(ActivityResultContracts.GetContent()){
-        launch{
-            geoFilesImported(it, MetaFeatureSettingsDesign.Request.ImportGeoSite)
-        }
-    }
-    private val countryDbImporter = registerForActivityResult(ActivityResultContracts.GetContent()){
-        launch{
-            geoFilesImported(it, MetaFeatureSettingsDesign.Request.ImportCountry)
-        }
-    }
     override suspend fun main() {
         val configuration = withClash { queryOverride(Clash.OverrideSlot.Persist) }
 
@@ -70,13 +55,22 @@ class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
                             }
                         }
                         MetaFeatureSettingsDesign.Request.ImportGeoIp -> {
-                            geoipDbImporter.launch("*/*")
+                            val uri = startActivityForResult(
+                                ActivityResultContracts.GetContent(),
+                                "*/*")
+                            geoFilesImported(uri, MetaFeatureSettingsDesign.Request.ImportGeoIp)
                         }
                         MetaFeatureSettingsDesign.Request.ImportGeoSite -> {
-                            geositeDbImporter.launch("*/*")
+                            val uri = startActivityForResult(
+                                ActivityResultContracts.GetContent(),
+                                "*/*")
+                            geoFilesImported(uri, MetaFeatureSettingsDesign.Request.ImportGeoSite)
                         }
                         MetaFeatureSettingsDesign.Request.ImportCountry -> {
-                            countryDbImporter.launch("*/*")
+                            val uri = startActivityForResult(
+                                ActivityResultContracts.GetContent(),
+                                "*/*")
+                            geoFilesImported(uri, MetaFeatureSettingsDesign.Request.ImportCountry)
                         }
                     }
                 }
@@ -119,7 +113,7 @@ class MetaFeatureSettingsActivity : BaseActivity<MetaFeatureSettingsDesign>() {
                 }
 
                 withContext(Dispatchers.IO) {
-                    val outputFile = File(File(filesDir, "clash"), outputFileName);
+                    val outputFile = File(clashDir, outputFileName);
                     contentResolver.openInputStream(uri).use { ins ->
                         FileOutputStream(outputFile).use { outs ->
                             ins?.copyTo(outs)
